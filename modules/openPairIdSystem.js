@@ -22,6 +22,14 @@ const DEFAULT_STORAGE_PUBLISHER_ID_KEYS = {
   liveramp: '_lr_pairId'
 };
 
+const DEFAULT_ATYPE = 3;
+const DEFAULT_SOURCE = 'pair-protocol.com';
+
+const GOOGLE_ATYPE = 517787;
+const GOOGLE_SOURCE = 'google.com';
+
+const MATCH_METHOD = 3;
+
 export const storage = getStorageManager({moduleType: MODULE_TYPE_UID, moduleName: MODULE_NAME});
 
 function publisherIdFromLocalStorage(key) {
@@ -117,16 +125,19 @@ export const openPairIdSubmodule = {
       const inserter = config.inserter;
       const matcher = config.matcher;
 
+      const source = config.google ? GOOGLE_SOURCE : DEFAULT_SOURCE;
+      const atype = config.google ? GOOGLE_ATYPE : DEFAULT_ATYPE;
+
       return [
         {
-          source: 'pair-protocol.com',
-          mm: 3,
+          source: source,
+          mm: MATCH_METHOD,
           inserter: inserter,
           matcher: matcher,
           uids: values.map(function(value) {
             return {
               id: value,
-              atype: 3
+              atype: atype
             }
           })
         }

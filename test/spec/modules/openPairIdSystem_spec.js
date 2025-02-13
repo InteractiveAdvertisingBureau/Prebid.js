@@ -149,6 +149,29 @@ describe('openPairId', function () {
     );
   });
 
+  describe('google', () => {
+    it('generates expected output', function() {
+      const config = {
+        google: true
+      };
+
+      const result = openPairIdSubmodule.eids.openPairId(['some-random-id-value'], config);
+      expect(result.length).to.equal(1);
+
+      expect(result[0]).to.deep.include(
+        {
+          source: 'google.com',
+          uids: [
+            {
+              atype: 517787,
+              id: 'some-random-id-value'
+            }
+          ]
+        }
+      );
+    });
+  });
+
   describe('eid', () => {
     before(() => {
       attachIdSystem(openPairIdSubmodule);
